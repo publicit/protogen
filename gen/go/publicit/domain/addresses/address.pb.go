@@ -22,7 +22,6 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Address is the address object generic for any entity
 type Address struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
