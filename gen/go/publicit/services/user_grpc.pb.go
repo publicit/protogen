@@ -27,6 +27,8 @@ type UserServiceClient interface {
 	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error)
 	LoginUser(ctx context.Context, in *LoginUserRequest, opts ...grpc.CallOption) (*LoginUserResponse, error)
 	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUsersResponse, error)
+	RegistrationSave(ctx context.Context, in *RegistrationSaveRequest, opts ...grpc.CallOption) (*RegistrationSaveResponse, error)
+	RegistrationLoad(ctx context.Context, in *RegistrationLoadRequest, opts ...grpc.CallOption) (*RegistrationLoadResponse, error)
 }
 
 type userServiceClient struct {
@@ -73,6 +75,24 @@ func (c *userServiceClient) ListUsers(ctx context.Context, in *ListUsersRequest,
 	return out, nil
 }
 
+func (c *userServiceClient) RegistrationSave(ctx context.Context, in *RegistrationSaveRequest, opts ...grpc.CallOption) (*RegistrationSaveResponse, error) {
+	out := new(RegistrationSaveResponse)
+	err := c.cc.Invoke(ctx, "/protos.publicit.services.UserService/RegistrationSave", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) RegistrationLoad(ctx context.Context, in *RegistrationLoadRequest, opts ...grpc.CallOption) (*RegistrationLoadResponse, error) {
+	out := new(RegistrationLoadResponse)
+	err := c.cc.Invoke(ctx, "/protos.publicit.services.UserService/RegistrationLoad", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility
@@ -81,6 +101,8 @@ type UserServiceServer interface {
 	UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error)
 	LoginUser(context.Context, *LoginUserRequest) (*LoginUserResponse, error)
 	ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error)
+	RegistrationSave(context.Context, *RegistrationSaveRequest) (*RegistrationSaveResponse, error)
+	RegistrationLoad(context.Context, *RegistrationLoadRequest) (*RegistrationLoadResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -99,6 +121,12 @@ func (UnimplementedUserServiceServer) LoginUser(context.Context, *LoginUserReque
 }
 func (UnimplementedUserServiceServer) ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListUsers not implemented")
+}
+func (UnimplementedUserServiceServer) RegistrationSave(context.Context, *RegistrationSaveRequest) (*RegistrationSaveResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RegistrationSave not implemented")
+}
+func (UnimplementedUserServiceServer) RegistrationLoad(context.Context, *RegistrationLoadRequest) (*RegistrationLoadResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RegistrationLoad not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 
@@ -185,6 +213,42 @@ func _UserService_ListUsers_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_RegistrationSave_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegistrationSaveRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).RegistrationSave(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protos.publicit.services.UserService/RegistrationSave",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).RegistrationSave(ctx, req.(*RegistrationSaveRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_RegistrationLoad_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegistrationLoadRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).RegistrationLoad(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protos.publicit.services.UserService/RegistrationLoad",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).RegistrationLoad(ctx, req.(*RegistrationLoadRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -207,6 +271,14 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListUsers",
 			Handler:    _UserService_ListUsers_Handler,
+		},
+		{
+			MethodName: "RegistrationSave",
+			Handler:    _UserService_RegistrationSave_Handler,
+		},
+		{
+			MethodName: "RegistrationLoad",
+			Handler:    _UserService_RegistrationLoad_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
