@@ -27,6 +27,7 @@ type UserServiceClient interface {
 	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error)
 	LoginUser(ctx context.Context, in *LoginUserRequest, opts ...grpc.CallOption) (*LoginUserResponse, error)
 	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUsersResponse, error)
+	LoadUser(ctx context.Context, in *LoadUserRequest, opts ...grpc.CallOption) (*LoadUserResponse, error)
 	RegistrationSave(ctx context.Context, in *RegistrationSaveRequest, opts ...grpc.CallOption) (*RegistrationSaveResponse, error)
 	RegistrationLoad(ctx context.Context, in *RegistrationLoadRequest, opts ...grpc.CallOption) (*RegistrationLoadResponse, error)
 }
@@ -75,6 +76,15 @@ func (c *userServiceClient) ListUsers(ctx context.Context, in *ListUsersRequest,
 	return out, nil
 }
 
+func (c *userServiceClient) LoadUser(ctx context.Context, in *LoadUserRequest, opts ...grpc.CallOption) (*LoadUserResponse, error) {
+	out := new(LoadUserResponse)
+	err := c.cc.Invoke(ctx, "/protos.publicit.services.UserService/LoadUser", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userServiceClient) RegistrationSave(ctx context.Context, in *RegistrationSaveRequest, opts ...grpc.CallOption) (*RegistrationSaveResponse, error) {
 	out := new(RegistrationSaveResponse)
 	err := c.cc.Invoke(ctx, "/protos.publicit.services.UserService/RegistrationSave", in, out, opts...)
@@ -101,6 +111,7 @@ type UserServiceServer interface {
 	UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error)
 	LoginUser(context.Context, *LoginUserRequest) (*LoginUserResponse, error)
 	ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error)
+	LoadUser(context.Context, *LoadUserRequest) (*LoadUserResponse, error)
 	RegistrationSave(context.Context, *RegistrationSaveRequest) (*RegistrationSaveResponse, error)
 	RegistrationLoad(context.Context, *RegistrationLoadRequest) (*RegistrationLoadResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
@@ -121,6 +132,9 @@ func (UnimplementedUserServiceServer) LoginUser(context.Context, *LoginUserReque
 }
 func (UnimplementedUserServiceServer) ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListUsers not implemented")
+}
+func (UnimplementedUserServiceServer) LoadUser(context.Context, *LoadUserRequest) (*LoadUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LoadUser not implemented")
 }
 func (UnimplementedUserServiceServer) RegistrationSave(context.Context, *RegistrationSaveRequest) (*RegistrationSaveResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RegistrationSave not implemented")
@@ -213,6 +227,24 @@ func _UserService_ListUsers_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_LoadUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LoadUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).LoadUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protos.publicit.services.UserService/LoadUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).LoadUser(ctx, req.(*LoadUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _UserService_RegistrationSave_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RegistrationSaveRequest)
 	if err := dec(in); err != nil {
@@ -271,6 +303,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListUsers",
 			Handler:    _UserService_ListUsers_Handler,
+		},
+		{
+			MethodName: "LoadUser",
+			Handler:    _UserService_LoadUser_Handler,
 		},
 		{
 			MethodName: "RegistrationSave",
