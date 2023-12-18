@@ -214,8 +214,6 @@ type DeleteRoleRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
-
-	Role *users.Role `protobuf:"bytes,1,opt,name=role,proto3" json:"role,omitempty"`
 }
 
 func (x *DeleteRoleRequest) Reset() {
@@ -250,19 +248,10 @@ func (*DeleteRoleRequest) Descriptor() ([]byte, []int) {
 	return file_publicit_services_role_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *DeleteRoleRequest) GetRole() *users.Role {
-	if x != nil {
-		return x.Role
-	}
-	return nil
-}
-
 type DeleteRoleResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
-
-	Role *users.Role `protobuf:"bytes,1,opt,name=role,proto3" json:"role,omitempty"`
 }
 
 func (x *DeleteRoleResponse) Reset() {
@@ -295,13 +284,6 @@ func (x *DeleteRoleResponse) ProtoReflect() protoreflect.Message {
 // Deprecated: Use DeleteRoleResponse.ProtoReflect.Descriptor instead.
 func (*DeleteRoleResponse) Descriptor() ([]byte, []int) {
 	return file_publicit_services_role_proto_rawDescGZIP(), []int{5}
-}
-
-func (x *DeleteRoleResponse) GetRole() *users.Role {
-	if x != nil {
-		return x.Role
-	}
-	return nil
 }
 
 type ListRolesRequest struct {
@@ -887,16 +869,9 @@ var file_publicit_services_role_proto_rawDesc = []byte{
 	0x6c, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
 	0x73, 0x2e, 0x70, 0x75, 0x62, 0x6c, 0x69, 0x63, 0x69, 0x74, 0x2e, 0x64, 0x6f, 0x6d, 0x61, 0x69,
 	0x6e, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x73, 0x2e, 0x52, 0x6f, 0x6c, 0x65, 0x52, 0x04, 0x72, 0x6f,
-	0x6c, 0x65, 0x22, 0x4b, 0x0a, 0x11, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x52, 0x6f, 0x6c, 0x65,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x36, 0x0a, 0x04, 0x72, 0x6f, 0x6c, 0x65, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x73, 0x2e, 0x70,
-	0x75, 0x62, 0x6c, 0x69, 0x63, 0x69, 0x74, 0x2e, 0x64, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x2e, 0x75,
-	0x73, 0x65, 0x72, 0x73, 0x2e, 0x52, 0x6f, 0x6c, 0x65, 0x52, 0x04, 0x72, 0x6f, 0x6c, 0x65, 0x22,
-	0x4c, 0x0a, 0x12, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x52, 0x6f, 0x6c, 0x65, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x36, 0x0a, 0x04, 0x72, 0x6f, 0x6c, 0x65, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x73, 0x2e, 0x70, 0x75, 0x62,
-	0x6c, 0x69, 0x63, 0x69, 0x74, 0x2e, 0x64, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x2e, 0x75, 0x73, 0x65,
-	0x72, 0x73, 0x2e, 0x52, 0x6f, 0x6c, 0x65, 0x52, 0x04, 0x72, 0x6f, 0x6c, 0x65, 0x22, 0x12, 0x0a,
+	0x6c, 0x65, 0x22, 0x13, 0x0a, 0x11, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x52, 0x6f, 0x6c, 0x65,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x14, 0x0a, 0x12, 0x44, 0x65, 0x6c, 0x65, 0x74,
+	0x65, 0x52, 0x6f, 0x6c, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x12, 0x0a,
 	0x10, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x6f, 0x6c, 0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
 	0x74, 0x22, 0x4d, 0x0a, 0x11, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x6f, 0x6c, 0x65, 0x73, 0x52, 0x65,
 	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x38, 0x0a, 0x05, 0x72, 0x6f, 0x6c, 0x65, 0x73, 0x18,
@@ -1069,41 +1044,39 @@ var file_publicit_services_role_proto_depIdxs = []int32{
 	18, // 1: protos.publicit.services.CreateRoleResponse.role:type_name -> protos.publicit.domain.users.Role
 	18, // 2: protos.publicit.services.UpdateRoleRequest.role:type_name -> protos.publicit.domain.users.Role
 	18, // 3: protos.publicit.services.UpdateRoleResponse.role:type_name -> protos.publicit.domain.users.Role
-	18, // 4: protos.publicit.services.DeleteRoleRequest.role:type_name -> protos.publicit.domain.users.Role
-	18, // 5: protos.publicit.services.DeleteRoleResponse.role:type_name -> protos.publicit.domain.users.Role
-	18, // 6: protos.publicit.services.ListRolesResponse.roles:type_name -> protos.publicit.domain.users.Role
-	18, // 7: protos.publicit.services.LoadRoleResponse.role:type_name -> protos.publicit.domain.users.Role
-	18, // 8: protos.publicit.services.AddUserRequest.role:type_name -> protos.publicit.domain.users.Role
-	19, // 9: protos.publicit.services.AddUserRequest.user:type_name -> protos.publicit.domain.users.User
-	18, // 10: protos.publicit.services.RemoveUserRequest.role:type_name -> protos.publicit.domain.users.Role
-	19, // 11: protos.publicit.services.RemoveUserRequest.user:type_name -> protos.publicit.domain.users.User
-	18, // 12: protos.publicit.services.ListUsersInRoleRequest.role:type_name -> protos.publicit.domain.users.Role
-	19, // 13: protos.publicit.services.ListUsersInRoleResponse.users:type_name -> protos.publicit.domain.users.User
-	19, // 14: protos.publicit.services.ListRolesForUserRequest.user:type_name -> protos.publicit.domain.users.User
-	18, // 15: protos.publicit.services.ListRolesForUserResponse.roles:type_name -> protos.publicit.domain.users.Role
-	0,  // 16: protos.publicit.services.RoleService.CreateRole:input_type -> protos.publicit.services.CreateRoleRequest
-	2,  // 17: protos.publicit.services.RoleService.UpdateRole:input_type -> protos.publicit.services.UpdateRoleRequest
-	4,  // 18: protos.publicit.services.RoleService.DeleteRole:input_type -> protos.publicit.services.DeleteRoleRequest
-	6,  // 19: protos.publicit.services.RoleService.ListRoles:input_type -> protos.publicit.services.ListRolesRequest
-	8,  // 20: protos.publicit.services.RoleService.LoadRole:input_type -> protos.publicit.services.LoadRoleRequest
-	10, // 21: protos.publicit.services.RoleService.AddUser:input_type -> protos.publicit.services.AddUserRequest
-	12, // 22: protos.publicit.services.RoleService.RemoveUser:input_type -> protos.publicit.services.RemoveUserRequest
-	14, // 23: protos.publicit.services.RoleService.ListUsersInRole:input_type -> protos.publicit.services.ListUsersInRoleRequest
-	16, // 24: protos.publicit.services.RoleService.ListRolesForUser:input_type -> protos.publicit.services.ListRolesForUserRequest
-	1,  // 25: protos.publicit.services.RoleService.CreateRole:output_type -> protos.publicit.services.CreateRoleResponse
-	3,  // 26: protos.publicit.services.RoleService.UpdateRole:output_type -> protos.publicit.services.UpdateRoleResponse
-	5,  // 27: protos.publicit.services.RoleService.DeleteRole:output_type -> protos.publicit.services.DeleteRoleResponse
-	7,  // 28: protos.publicit.services.RoleService.ListRoles:output_type -> protos.publicit.services.ListRolesResponse
-	9,  // 29: protos.publicit.services.RoleService.LoadRole:output_type -> protos.publicit.services.LoadRoleResponse
-	11, // 30: protos.publicit.services.RoleService.AddUser:output_type -> protos.publicit.services.AddUserResponse
-	13, // 31: protos.publicit.services.RoleService.RemoveUser:output_type -> protos.publicit.services.RemoveUserResponse
-	15, // 32: protos.publicit.services.RoleService.ListUsersInRole:output_type -> protos.publicit.services.ListUsersInRoleResponse
-	17, // 33: protos.publicit.services.RoleService.ListRolesForUser:output_type -> protos.publicit.services.ListRolesForUserResponse
-	25, // [25:34] is the sub-list for method output_type
-	16, // [16:25] is the sub-list for method input_type
-	16, // [16:16] is the sub-list for extension type_name
-	16, // [16:16] is the sub-list for extension extendee
-	0,  // [0:16] is the sub-list for field type_name
+	18, // 4: protos.publicit.services.ListRolesResponse.roles:type_name -> protos.publicit.domain.users.Role
+	18, // 5: protos.publicit.services.LoadRoleResponse.role:type_name -> protos.publicit.domain.users.Role
+	18, // 6: protos.publicit.services.AddUserRequest.role:type_name -> protos.publicit.domain.users.Role
+	19, // 7: protos.publicit.services.AddUserRequest.user:type_name -> protos.publicit.domain.users.User
+	18, // 8: protos.publicit.services.RemoveUserRequest.role:type_name -> protos.publicit.domain.users.Role
+	19, // 9: protos.publicit.services.RemoveUserRequest.user:type_name -> protos.publicit.domain.users.User
+	18, // 10: protos.publicit.services.ListUsersInRoleRequest.role:type_name -> protos.publicit.domain.users.Role
+	19, // 11: protos.publicit.services.ListUsersInRoleResponse.users:type_name -> protos.publicit.domain.users.User
+	19, // 12: protos.publicit.services.ListRolesForUserRequest.user:type_name -> protos.publicit.domain.users.User
+	18, // 13: protos.publicit.services.ListRolesForUserResponse.roles:type_name -> protos.publicit.domain.users.Role
+	0,  // 14: protos.publicit.services.RoleService.CreateRole:input_type -> protos.publicit.services.CreateRoleRequest
+	2,  // 15: protos.publicit.services.RoleService.UpdateRole:input_type -> protos.publicit.services.UpdateRoleRequest
+	4,  // 16: protos.publicit.services.RoleService.DeleteRole:input_type -> protos.publicit.services.DeleteRoleRequest
+	6,  // 17: protos.publicit.services.RoleService.ListRoles:input_type -> protos.publicit.services.ListRolesRequest
+	8,  // 18: protos.publicit.services.RoleService.LoadRole:input_type -> protos.publicit.services.LoadRoleRequest
+	10, // 19: protos.publicit.services.RoleService.AddUser:input_type -> protos.publicit.services.AddUserRequest
+	12, // 20: protos.publicit.services.RoleService.RemoveUser:input_type -> protos.publicit.services.RemoveUserRequest
+	14, // 21: protos.publicit.services.RoleService.ListUsersInRole:input_type -> protos.publicit.services.ListUsersInRoleRequest
+	16, // 22: protos.publicit.services.RoleService.ListRolesForUser:input_type -> protos.publicit.services.ListRolesForUserRequest
+	1,  // 23: protos.publicit.services.RoleService.CreateRole:output_type -> protos.publicit.services.CreateRoleResponse
+	3,  // 24: protos.publicit.services.RoleService.UpdateRole:output_type -> protos.publicit.services.UpdateRoleResponse
+	5,  // 25: protos.publicit.services.RoleService.DeleteRole:output_type -> protos.publicit.services.DeleteRoleResponse
+	7,  // 26: protos.publicit.services.RoleService.ListRoles:output_type -> protos.publicit.services.ListRolesResponse
+	9,  // 27: protos.publicit.services.RoleService.LoadRole:output_type -> protos.publicit.services.LoadRoleResponse
+	11, // 28: protos.publicit.services.RoleService.AddUser:output_type -> protos.publicit.services.AddUserResponse
+	13, // 29: protos.publicit.services.RoleService.RemoveUser:output_type -> protos.publicit.services.RemoveUserResponse
+	15, // 30: protos.publicit.services.RoleService.ListUsersInRole:output_type -> protos.publicit.services.ListUsersInRoleResponse
+	17, // 31: protos.publicit.services.RoleService.ListRolesForUser:output_type -> protos.publicit.services.ListRolesForUserResponse
+	23, // [23:32] is the sub-list for method output_type
+	14, // [14:23] is the sub-list for method input_type
+	14, // [14:14] is the sub-list for extension type_name
+	14, // [14:14] is the sub-list for extension extendee
+	0,  // [0:14] is the sub-list for field type_name
 }
 
 func init() { file_publicit_services_role_proto_init() }
