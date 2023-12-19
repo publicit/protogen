@@ -21,6 +21,55 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type RoleName int32
+
+const (
+	RoleName_administrators  RoleName = 0
+	RoleName_users           RoleName = 1
+	RoleName_campaign_owners RoleName = 2
+)
+
+// Enum value maps for RoleName.
+var (
+	RoleName_name = map[int32]string{
+		0: "administrators",
+		1: "users",
+		2: "campaign_owners",
+	}
+	RoleName_value = map[string]int32{
+		"administrators":  0,
+		"users":           1,
+		"campaign_owners": 2,
+	}
+)
+
+func (x RoleName) Enum() *RoleName {
+	p := new(RoleName)
+	*p = x
+	return p
+}
+
+func (x RoleName) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (RoleName) Descriptor() protoreflect.EnumDescriptor {
+	return file_publicit_domain_users_role_proto_enumTypes[0].Descriptor()
+}
+
+func (RoleName) Type() protoreflect.EnumType {
+	return &file_publicit_domain_users_role_proto_enumTypes[0]
+}
+
+func (x RoleName) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use RoleName.Descriptor instead.
+func (RoleName) EnumDescriptor() ([]byte, []int) {
+	return file_publicit_domain_users_role_proto_rawDescGZIP(), []int{0}
+}
+
 type Role struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -95,7 +144,11 @@ var file_publicit_domain_users_role_proto_rawDesc = []byte{
 	0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65,
 	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b,
 	0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x42, 0xfc,
+	0x09, 0x52, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x2a, 0x3e,
+	0x0a, 0x08, 0x52, 0x6f, 0x6c, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x12, 0x0a, 0x0e, 0x61, 0x64,
+	0x6d, 0x69, 0x6e, 0x69, 0x73, 0x74, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x10, 0x00, 0x12, 0x09,
+	0x0a, 0x05, 0x75, 0x73, 0x65, 0x72, 0x73, 0x10, 0x01, 0x12, 0x13, 0x0a, 0x0f, 0x63, 0x61, 0x6d,
+	0x70, 0x61, 0x69, 0x67, 0x6e, 0x5f, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x73, 0x10, 0x02, 0x42, 0xfc,
 	0x01, 0x0a, 0x20, 0x63, 0x6f, 0x6d, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x73, 0x2e, 0x70, 0x75,
 	0x62, 0x6c, 0x69, 0x63, 0x69, 0x74, 0x2e, 0x64, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x2e, 0x75, 0x73,
 	0x65, 0x72, 0x73, 0x42, 0x09, 0x52, 0x6f, 0x6c, 0x65, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01,
@@ -127,9 +180,11 @@ func file_publicit_domain_users_role_proto_rawDescGZIP() []byte {
 	return file_publicit_domain_users_role_proto_rawDescData
 }
 
+var file_publicit_domain_users_role_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_publicit_domain_users_role_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_publicit_domain_users_role_proto_goTypes = []interface{}{
-	(*Role)(nil), // 0: protos.publicit.domain.users.Role
+	(RoleName)(0), // 0: protos.publicit.domain.users.RoleName
+	(*Role)(nil),  // 1: protos.publicit.domain.users.Role
 }
 var file_publicit_domain_users_role_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -163,13 +218,14 @@ func file_publicit_domain_users_role_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_publicit_domain_users_role_proto_rawDesc,
-			NumEnums:      0,
+			NumEnums:      1,
 			NumMessages:   1,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_publicit_domain_users_role_proto_goTypes,
 		DependencyIndexes: file_publicit_domain_users_role_proto_depIdxs,
+		EnumInfos:         file_publicit_domain_users_role_proto_enumTypes,
 		MessageInfos:      file_publicit_domain_users_role_proto_msgTypes,
 	}.Build()
 	File_publicit_domain_users_role_proto = out.File
