@@ -28,8 +28,8 @@ type UserServiceClient interface {
 	LoginUser(ctx context.Context, in *LoginUserRequest, opts ...grpc.CallOption) (*LoginUserResponse, error)
 	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUsersResponse, error)
 	LoadUser(ctx context.Context, in *LoadUserRequest, opts ...grpc.CallOption) (*LoadUserResponse, error)
-	RegistrationSave(ctx context.Context, in *RegistrationSaveRequest, opts ...grpc.CallOption) (*RegistrationSaveResponse, error)
-	RegistrationLoad(ctx context.Context, in *RegistrationLoadRequest, opts ...grpc.CallOption) (*RegistrationLoadResponse, error)
+	ProfileSave(ctx context.Context, in *ProfileSaveRequest, opts ...grpc.CallOption) (*ProfileSaveResponse, error)
+	ProfileLoad(ctx context.Context, in *ProfileLoadRequest, opts ...grpc.CallOption) (*ProfileLoadResponse, error)
 }
 
 type userServiceClient struct {
@@ -85,18 +85,18 @@ func (c *userServiceClient) LoadUser(ctx context.Context, in *LoadUserRequest, o
 	return out, nil
 }
 
-func (c *userServiceClient) RegistrationSave(ctx context.Context, in *RegistrationSaveRequest, opts ...grpc.CallOption) (*RegistrationSaveResponse, error) {
-	out := new(RegistrationSaveResponse)
-	err := c.cc.Invoke(ctx, "/protos.publicit.services.UserService/RegistrationSave", in, out, opts...)
+func (c *userServiceClient) ProfileSave(ctx context.Context, in *ProfileSaveRequest, opts ...grpc.CallOption) (*ProfileSaveResponse, error) {
+	out := new(ProfileSaveResponse)
+	err := c.cc.Invoke(ctx, "/protos.publicit.services.UserService/ProfileSave", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *userServiceClient) RegistrationLoad(ctx context.Context, in *RegistrationLoadRequest, opts ...grpc.CallOption) (*RegistrationLoadResponse, error) {
-	out := new(RegistrationLoadResponse)
-	err := c.cc.Invoke(ctx, "/protos.publicit.services.UserService/RegistrationLoad", in, out, opts...)
+func (c *userServiceClient) ProfileLoad(ctx context.Context, in *ProfileLoadRequest, opts ...grpc.CallOption) (*ProfileLoadResponse, error) {
+	out := new(ProfileLoadResponse)
+	err := c.cc.Invoke(ctx, "/protos.publicit.services.UserService/ProfileLoad", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -112,8 +112,8 @@ type UserServiceServer interface {
 	LoginUser(context.Context, *LoginUserRequest) (*LoginUserResponse, error)
 	ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error)
 	LoadUser(context.Context, *LoadUserRequest) (*LoadUserResponse, error)
-	RegistrationSave(context.Context, *RegistrationSaveRequest) (*RegistrationSaveResponse, error)
-	RegistrationLoad(context.Context, *RegistrationLoadRequest) (*RegistrationLoadResponse, error)
+	ProfileSave(context.Context, *ProfileSaveRequest) (*ProfileSaveResponse, error)
+	ProfileLoad(context.Context, *ProfileLoadRequest) (*ProfileLoadResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -136,11 +136,11 @@ func (UnimplementedUserServiceServer) ListUsers(context.Context, *ListUsersReque
 func (UnimplementedUserServiceServer) LoadUser(context.Context, *LoadUserRequest) (*LoadUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LoadUser not implemented")
 }
-func (UnimplementedUserServiceServer) RegistrationSave(context.Context, *RegistrationSaveRequest) (*RegistrationSaveResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RegistrationSave not implemented")
+func (UnimplementedUserServiceServer) ProfileSave(context.Context, *ProfileSaveRequest) (*ProfileSaveResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ProfileSave not implemented")
 }
-func (UnimplementedUserServiceServer) RegistrationLoad(context.Context, *RegistrationLoadRequest) (*RegistrationLoadResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RegistrationLoad not implemented")
+func (UnimplementedUserServiceServer) ProfileLoad(context.Context, *ProfileLoadRequest) (*ProfileLoadResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ProfileLoad not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 
@@ -245,38 +245,38 @@ func _UserService_LoadUser_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserService_RegistrationSave_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RegistrationSaveRequest)
+func _UserService_ProfileSave_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProfileSaveRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServiceServer).RegistrationSave(ctx, in)
+		return srv.(UserServiceServer).ProfileSave(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/protos.publicit.services.UserService/RegistrationSave",
+		FullMethod: "/protos.publicit.services.UserService/ProfileSave",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).RegistrationSave(ctx, req.(*RegistrationSaveRequest))
+		return srv.(UserServiceServer).ProfileSave(ctx, req.(*ProfileSaveRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserService_RegistrationLoad_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RegistrationLoadRequest)
+func _UserService_ProfileLoad_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProfileLoadRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServiceServer).RegistrationLoad(ctx, in)
+		return srv.(UserServiceServer).ProfileLoad(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/protos.publicit.services.UserService/RegistrationLoad",
+		FullMethod: "/protos.publicit.services.UserService/ProfileLoad",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).RegistrationLoad(ctx, req.(*RegistrationLoadRequest))
+		return srv.(UserServiceServer).ProfileLoad(ctx, req.(*ProfileLoadRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -309,12 +309,12 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _UserService_LoadUser_Handler,
 		},
 		{
-			MethodName: "RegistrationSave",
-			Handler:    _UserService_RegistrationSave_Handler,
+			MethodName: "ProfileSave",
+			Handler:    _UserService_ProfileSave_Handler,
 		},
 		{
-			MethodName: "RegistrationLoad",
-			Handler:    _UserService_RegistrationLoad_Handler,
+			MethodName: "ProfileLoad",
+			Handler:    _UserService_ProfileLoad_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
