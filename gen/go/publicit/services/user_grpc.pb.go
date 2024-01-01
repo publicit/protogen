@@ -30,6 +30,8 @@ type UserServiceClient interface {
 	LoadUser(ctx context.Context, in *LoadUserRequest, opts ...grpc.CallOption) (*LoadUserResponse, error)
 	ProfileSave(ctx context.Context, in *ProfileSaveRequest, opts ...grpc.CallOption) (*ProfileSaveResponse, error)
 	ProfileLoad(ctx context.Context, in *ProfileLoadRequest, opts ...grpc.CallOption) (*ProfileLoadResponse, error)
+	ProfileFileSave(ctx context.Context, in *ProfileFileSaveRequest, opts ...grpc.CallOption) (*ProfileFileSaveResponse, error)
+	ProfileFilesLoad(ctx context.Context, in *ProfileFilesLoadRequest, opts ...grpc.CallOption) (*ProfileFilesLoadResponse, error)
 }
 
 type userServiceClient struct {
@@ -103,6 +105,24 @@ func (c *userServiceClient) ProfileLoad(ctx context.Context, in *ProfileLoadRequ
 	return out, nil
 }
 
+func (c *userServiceClient) ProfileFileSave(ctx context.Context, in *ProfileFileSaveRequest, opts ...grpc.CallOption) (*ProfileFileSaveResponse, error) {
+	out := new(ProfileFileSaveResponse)
+	err := c.cc.Invoke(ctx, "/protos.publicit.services.UserService/ProfileFileSave", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) ProfileFilesLoad(ctx context.Context, in *ProfileFilesLoadRequest, opts ...grpc.CallOption) (*ProfileFilesLoadResponse, error) {
+	out := new(ProfileFilesLoadResponse)
+	err := c.cc.Invoke(ctx, "/protos.publicit.services.UserService/ProfileFilesLoad", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility
@@ -114,6 +134,8 @@ type UserServiceServer interface {
 	LoadUser(context.Context, *LoadUserRequest) (*LoadUserResponse, error)
 	ProfileSave(context.Context, *ProfileSaveRequest) (*ProfileSaveResponse, error)
 	ProfileLoad(context.Context, *ProfileLoadRequest) (*ProfileLoadResponse, error)
+	ProfileFileSave(context.Context, *ProfileFileSaveRequest) (*ProfileFileSaveResponse, error)
+	ProfileFilesLoad(context.Context, *ProfileFilesLoadRequest) (*ProfileFilesLoadResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -141,6 +163,12 @@ func (UnimplementedUserServiceServer) ProfileSave(context.Context, *ProfileSaveR
 }
 func (UnimplementedUserServiceServer) ProfileLoad(context.Context, *ProfileLoadRequest) (*ProfileLoadResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ProfileLoad not implemented")
+}
+func (UnimplementedUserServiceServer) ProfileFileSave(context.Context, *ProfileFileSaveRequest) (*ProfileFileSaveResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ProfileFileSave not implemented")
+}
+func (UnimplementedUserServiceServer) ProfileFilesLoad(context.Context, *ProfileFilesLoadRequest) (*ProfileFilesLoadResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ProfileFilesLoad not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 
@@ -281,6 +309,42 @@ func _UserService_ProfileLoad_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_ProfileFileSave_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProfileFileSaveRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).ProfileFileSave(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protos.publicit.services.UserService/ProfileFileSave",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).ProfileFileSave(ctx, req.(*ProfileFileSaveRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_ProfileFilesLoad_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProfileFilesLoadRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).ProfileFilesLoad(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protos.publicit.services.UserService/ProfileFilesLoad",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).ProfileFilesLoad(ctx, req.(*ProfileFilesLoadRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -315,6 +379,14 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ProfileLoad",
 			Handler:    _UserService_ProfileLoad_Handler,
+		},
+		{
+			MethodName: "ProfileFileSave",
+			Handler:    _UserService_ProfileFileSave_Handler,
+		},
+		{
+			MethodName: "ProfileFilesLoad",
+			Handler:    _UserService_ProfileFilesLoad_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
