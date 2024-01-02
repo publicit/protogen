@@ -32,7 +32,6 @@ type UserServiceClient interface {
 	ProfileLoad(ctx context.Context, in *ProfileLoadRequest, opts ...grpc.CallOption) (*ProfileLoadResponse, error)
 	ProfileFileSave(ctx context.Context, in *ProfileFileSaveRequest, opts ...grpc.CallOption) (*ProfileFileSaveResponse, error)
 	ProfileFilesLoad(ctx context.Context, in *ProfileFilesLoadRequest, opts ...grpc.CallOption) (*ProfileFilesLoadResponse, error)
-	ProfileFileUpdate(ctx context.Context, in *ProfileFileUpdateRequest, opts ...grpc.CallOption) (*ProfileFileUpdateResponse, error)
 }
 
 type userServiceClient struct {
@@ -124,15 +123,6 @@ func (c *userServiceClient) ProfileFilesLoad(ctx context.Context, in *ProfileFil
 	return out, nil
 }
 
-func (c *userServiceClient) ProfileFileUpdate(ctx context.Context, in *ProfileFileUpdateRequest, opts ...grpc.CallOption) (*ProfileFileUpdateResponse, error) {
-	out := new(ProfileFileUpdateResponse)
-	err := c.cc.Invoke(ctx, "/protos.publicit.services.UserService/ProfileFileUpdate", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility
@@ -146,7 +136,6 @@ type UserServiceServer interface {
 	ProfileLoad(context.Context, *ProfileLoadRequest) (*ProfileLoadResponse, error)
 	ProfileFileSave(context.Context, *ProfileFileSaveRequest) (*ProfileFileSaveResponse, error)
 	ProfileFilesLoad(context.Context, *ProfileFilesLoadRequest) (*ProfileFilesLoadResponse, error)
-	ProfileFileUpdate(context.Context, *ProfileFileUpdateRequest) (*ProfileFileUpdateResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -180,9 +169,6 @@ func (UnimplementedUserServiceServer) ProfileFileSave(context.Context, *ProfileF
 }
 func (UnimplementedUserServiceServer) ProfileFilesLoad(context.Context, *ProfileFilesLoadRequest) (*ProfileFilesLoadResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ProfileFilesLoad not implemented")
-}
-func (UnimplementedUserServiceServer) ProfileFileUpdate(context.Context, *ProfileFileUpdateRequest) (*ProfileFileUpdateResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ProfileFileUpdate not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 
@@ -359,24 +345,6 @@ func _UserService_ProfileFilesLoad_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserService_ProfileFileUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ProfileFileUpdateRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UserServiceServer).ProfileFileUpdate(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/protos.publicit.services.UserService/ProfileFileUpdate",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).ProfileFileUpdate(ctx, req.(*ProfileFileUpdateRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -419,10 +387,6 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ProfileFilesLoad",
 			Handler:    _UserService_ProfileFilesLoad_Handler,
-		},
-		{
-			MethodName: "ProfileFileUpdate",
-			Handler:    _UserService_ProfileFileUpdate_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
