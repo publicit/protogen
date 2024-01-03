@@ -33,6 +33,7 @@ type UserServiceClient interface {
 	ProfileFileSave(ctx context.Context, in *ProfileFileSaveRequest, opts ...grpc.CallOption) (*ProfileFileSaveResponse, error)
 	ProfileFilesLoad(ctx context.Context, in *ProfileFilesLoadRequest, opts ...grpc.CallOption) (*ProfileFilesLoadResponse, error)
 	SupportedFileTypes(ctx context.Context, in *SupportedFileTypesRequest, opts ...grpc.CallOption) (*SupportedFileTypesResponse, error)
+	ProfileFileLoad(ctx context.Context, in *ProfileFileLoadRequest, opts ...grpc.CallOption) (*ProfileFileLoadResponse, error)
 }
 
 type userServiceClient struct {
@@ -133,6 +134,15 @@ func (c *userServiceClient) SupportedFileTypes(ctx context.Context, in *Supporte
 	return out, nil
 }
 
+func (c *userServiceClient) ProfileFileLoad(ctx context.Context, in *ProfileFileLoadRequest, opts ...grpc.CallOption) (*ProfileFileLoadResponse, error) {
+	out := new(ProfileFileLoadResponse)
+	err := c.cc.Invoke(ctx, "/protos.publicit.services.UserService/ProfileFileLoad", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility
@@ -147,6 +157,7 @@ type UserServiceServer interface {
 	ProfileFileSave(context.Context, *ProfileFileSaveRequest) (*ProfileFileSaveResponse, error)
 	ProfileFilesLoad(context.Context, *ProfileFilesLoadRequest) (*ProfileFilesLoadResponse, error)
 	SupportedFileTypes(context.Context, *SupportedFileTypesRequest) (*SupportedFileTypesResponse, error)
+	ProfileFileLoad(context.Context, *ProfileFileLoadRequest) (*ProfileFileLoadResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -183,6 +194,9 @@ func (UnimplementedUserServiceServer) ProfileFilesLoad(context.Context, *Profile
 }
 func (UnimplementedUserServiceServer) SupportedFileTypes(context.Context, *SupportedFileTypesRequest) (*SupportedFileTypesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SupportedFileTypes not implemented")
+}
+func (UnimplementedUserServiceServer) ProfileFileLoad(context.Context, *ProfileFileLoadRequest) (*ProfileFileLoadResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ProfileFileLoad not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 
@@ -377,6 +391,24 @@ func _UserService_SupportedFileTypes_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_ProfileFileLoad_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProfileFileLoadRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).ProfileFileLoad(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protos.publicit.services.UserService/ProfileFileLoad",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).ProfileFileLoad(ctx, req.(*ProfileFileLoadRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -423,6 +455,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SupportedFileTypes",
 			Handler:    _UserService_SupportedFileTypes_Handler,
+		},
+		{
+			MethodName: "ProfileFileLoad",
+			Handler:    _UserService_ProfileFileLoad_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
