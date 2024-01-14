@@ -25,6 +25,8 @@ const _ = grpc.SupportPackageIsVersion7
 type LocationServiceClient interface {
 	CountryList(ctx context.Context, in *CountryListRequest, opts ...grpc.CallOption) (*CountryListResponse, error)
 	CountryLoad(ctx context.Context, in *CountryLoadRequest, opts ...grpc.CallOption) (*CountryLoadResponse, error)
+	StartLocationImport(ctx context.Context, in *StartLocationImportRequest, opts ...grpc.CallOption) (*StartLocationImportResponse, error)
+	LocationImportList(ctx context.Context, in *LocationImportListRequest, opts ...grpc.CallOption) (*LocationImportListResponse, error)
 }
 
 type locationServiceClient struct {
@@ -53,12 +55,32 @@ func (c *locationServiceClient) CountryLoad(ctx context.Context, in *CountryLoad
 	return out, nil
 }
 
+func (c *locationServiceClient) StartLocationImport(ctx context.Context, in *StartLocationImportRequest, opts ...grpc.CallOption) (*StartLocationImportResponse, error) {
+	out := new(StartLocationImportResponse)
+	err := c.cc.Invoke(ctx, "/protos.publicit.services.LocationService/StartLocationImport", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *locationServiceClient) LocationImportList(ctx context.Context, in *LocationImportListRequest, opts ...grpc.CallOption) (*LocationImportListResponse, error) {
+	out := new(LocationImportListResponse)
+	err := c.cc.Invoke(ctx, "/protos.publicit.services.LocationService/LocationImportList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LocationServiceServer is the server API for LocationService service.
 // All implementations must embed UnimplementedLocationServiceServer
 // for forward compatibility
 type LocationServiceServer interface {
 	CountryList(context.Context, *CountryListRequest) (*CountryListResponse, error)
 	CountryLoad(context.Context, *CountryLoadRequest) (*CountryLoadResponse, error)
+	StartLocationImport(context.Context, *StartLocationImportRequest) (*StartLocationImportResponse, error)
+	LocationImportList(context.Context, *LocationImportListRequest) (*LocationImportListResponse, error)
 	mustEmbedUnimplementedLocationServiceServer()
 }
 
@@ -71,6 +93,12 @@ func (UnimplementedLocationServiceServer) CountryList(context.Context, *CountryL
 }
 func (UnimplementedLocationServiceServer) CountryLoad(context.Context, *CountryLoadRequest) (*CountryLoadResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CountryLoad not implemented")
+}
+func (UnimplementedLocationServiceServer) StartLocationImport(context.Context, *StartLocationImportRequest) (*StartLocationImportResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StartLocationImport not implemented")
+}
+func (UnimplementedLocationServiceServer) LocationImportList(context.Context, *LocationImportListRequest) (*LocationImportListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LocationImportList not implemented")
 }
 func (UnimplementedLocationServiceServer) mustEmbedUnimplementedLocationServiceServer() {}
 
@@ -121,6 +149,42 @@ func _LocationService_CountryLoad_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LocationService_StartLocationImport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StartLocationImportRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LocationServiceServer).StartLocationImport(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protos.publicit.services.LocationService/StartLocationImport",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LocationServiceServer).StartLocationImport(ctx, req.(*StartLocationImportRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LocationService_LocationImportList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LocationImportListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LocationServiceServer).LocationImportList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protos.publicit.services.LocationService/LocationImportList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LocationServiceServer).LocationImportList(ctx, req.(*LocationImportListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LocationService_ServiceDesc is the grpc.ServiceDesc for LocationService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -135,6 +199,14 @@ var LocationService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CountryLoad",
 			Handler:    _LocationService_CountryLoad_Handler,
+		},
+		{
+			MethodName: "StartLocationImport",
+			Handler:    _LocationService_StartLocationImport_Handler,
+		},
+		{
+			MethodName: "LocationImportList",
+			Handler:    _LocationService_LocationImportList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
