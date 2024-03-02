@@ -24,6 +24,8 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type EmailServiceClient interface {
 	SendEmail(ctx context.Context, in *SendEmailRequest, opts ...grpc.CallOption) (*SendEmailResponse, error)
+	TemplateInvitation(ctx context.Context, in *TemplateInvitationRequest, opts ...grpc.CallOption) (*TemplateInvitationResponse, error)
+	TemplateNotification(ctx context.Context, in *TemplateNotificationRequest, opts ...grpc.CallOption) (*TemplateNotificationResponse, error)
 }
 
 type emailServiceClient struct {
@@ -43,11 +45,31 @@ func (c *emailServiceClient) SendEmail(ctx context.Context, in *SendEmailRequest
 	return out, nil
 }
 
+func (c *emailServiceClient) TemplateInvitation(ctx context.Context, in *TemplateInvitationRequest, opts ...grpc.CallOption) (*TemplateInvitationResponse, error) {
+	out := new(TemplateInvitationResponse)
+	err := c.cc.Invoke(ctx, "/protos.publicit.services.EmailService/TemplateInvitation", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *emailServiceClient) TemplateNotification(ctx context.Context, in *TemplateNotificationRequest, opts ...grpc.CallOption) (*TemplateNotificationResponse, error) {
+	out := new(TemplateNotificationResponse)
+	err := c.cc.Invoke(ctx, "/protos.publicit.services.EmailService/TemplateNotification", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // EmailServiceServer is the server API for EmailService service.
 // All implementations must embed UnimplementedEmailServiceServer
 // for forward compatibility
 type EmailServiceServer interface {
 	SendEmail(context.Context, *SendEmailRequest) (*SendEmailResponse, error)
+	TemplateInvitation(context.Context, *TemplateInvitationRequest) (*TemplateInvitationResponse, error)
+	TemplateNotification(context.Context, *TemplateNotificationRequest) (*TemplateNotificationResponse, error)
 	mustEmbedUnimplementedEmailServiceServer()
 }
 
@@ -57,6 +79,12 @@ type UnimplementedEmailServiceServer struct {
 
 func (UnimplementedEmailServiceServer) SendEmail(context.Context, *SendEmailRequest) (*SendEmailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendEmail not implemented")
+}
+func (UnimplementedEmailServiceServer) TemplateInvitation(context.Context, *TemplateInvitationRequest) (*TemplateInvitationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TemplateInvitation not implemented")
+}
+func (UnimplementedEmailServiceServer) TemplateNotification(context.Context, *TemplateNotificationRequest) (*TemplateNotificationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TemplateNotification not implemented")
 }
 func (UnimplementedEmailServiceServer) mustEmbedUnimplementedEmailServiceServer() {}
 
@@ -89,6 +117,42 @@ func _EmailService_SendEmail_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _EmailService_TemplateInvitation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TemplateInvitationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(EmailServiceServer).TemplateInvitation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protos.publicit.services.EmailService/TemplateInvitation",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(EmailServiceServer).TemplateInvitation(ctx, req.(*TemplateInvitationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _EmailService_TemplateNotification_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TemplateNotificationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(EmailServiceServer).TemplateNotification(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protos.publicit.services.EmailService/TemplateNotification",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(EmailServiceServer).TemplateNotification(ctx, req.(*TemplateNotificationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // EmailService_ServiceDesc is the grpc.ServiceDesc for EmailService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -99,6 +163,14 @@ var EmailService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SendEmail",
 			Handler:    _EmailService_SendEmail_Handler,
+		},
+		{
+			MethodName: "TemplateInvitation",
+			Handler:    _EmailService_TemplateInvitation_Handler,
+		},
+		{
+			MethodName: "TemplateNotification",
+			Handler:    _EmailService_TemplateNotification_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
